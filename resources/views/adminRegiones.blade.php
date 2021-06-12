@@ -3,7 +3,12 @@
     @section('contenido')
 
         <h1>Panel de administración de regiones</h1>
-
+        <!--PARA MOSTRAR UN ALERTA CUANDO DAMOS DE ALTA UNA REGION-->
+        @if(session('mensaje'))
+            <div class="alert alert-success">
+                {{session('mensaje')}}
+            </div>
+        @endif
 
         <table class="table table-borderless table-striped table-hover">
             <thead>
@@ -23,12 +28,12 @@
                     <td>{{ $region->regID }}</td>
                     <td>{{ $region->regNombre }}</td>
                     <td>
-                        <a href="/modificarRegion/regID" class="btn btn-outline-secondary">
+                        <a href="/modificarRegion/{{$region->regID}}" class="btn btn-outline-secondary">
                             Modificar
                         </a>
                     </td>
                     <td>
-                        <a href="/eliminarRegion/regID" class="btn btn-outline-danger">
+                        <a href="/eliminarRegion/{{$region->regID}}" class="btn btn-outline-danger">
                             Eliminar
                         </a>
                     </td>
