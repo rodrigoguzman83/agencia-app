@@ -84,10 +84,36 @@ Route::post('/agregarRegion', function () {
     return redirect('/adminRegiones')->with('mensaje', 'Region: ' . $name . ' agregada correctamente');
 });
 
+//PARA ELIMINAR UNA REGION
+//MUESTRO EN EL FORM LA REGION A ELIMINAR
+Route::get('/eliminarRegion/{regID}', function ($regID) {
+    //BUSCO EL VALOR EN LA TABLA
+    $Region = DB::table('regiones')->where('regID', '=', $regID)->first();
+
+    //RETORNO EL VALOR
+    return view('/eliminarRegion', ['Region' => $Region]);
+});
+
+//ELIMINO EL REGISTRO
+Route::post('/eliminarRegion', function () {
+    //TOMO EL VALOR
+    $regID = $_POST['regID'];
+    $regNombre = $_POST['regNombre'];
+
+    //HAGO EL DELETE
+    DB::table('regiones')->where('regID', '=', $regID)->delete();
+
+    //REDIRIJO A LA PAGINA PRINCIPAL DE REGIONES
+    return redirect('/adminRegiones')->with(
+        'mensaje',
+        'Region: ' . $regNombre . ' eliminada correctamente'
+    );
+});
+
 /**DESTINOS */
 //LIST DESTINOS
 Route::get('/adminDestinos', function () {
-    $destinos = DB::select("SELECT destID, destNombre,regNombre,destPrecio 
+    $destinos = DB::select("SELECT destID, destNombre,regNombre,destPrecio
     FROM agencia.regiones r, agencia.destinos d
     where r.regID=d.regID");
     return view('adminDestinos', ['destinos' => $destinos]);
@@ -165,4 +191,30 @@ Route::post('modificarDestino', function () {
     //redirección + mensaje ok
     return redirect('/adminDestinos')
         ->with(['mensaje' => 'Destino: ' . $destName . ' modificado correctamente']);
+});
+
+//PARA ELIMINAR UN DESTINO
+//MUESTRO EN EL FORM EL DESTINO A ELIMINAR
+Route::get('/eliminarDestino/{destID}', function ($destID) {
+    //BUSCO EL VALOR EN LA TABLA
+    $Destino = DB::table('destinos')->where('destID', '=', $destID)->first();
+
+    //RETORNO EL VALOR
+    return view('/eliminarDestino', ['Destino' => $Destino]);
+});
+
+//ELIMINO EL REGISTRO
+Route::post('/eliminarDestino', function () {
+    //TOMO EL VALOR
+    $destID = $_POST['destID'];
+    $destNombre = $_POST['destNombre'];
+
+    //HAGO EL DELETE
+    DB::table('destinos')->where('destID', '=', $destID)->delete();
+
+    //REDIRIJO A LA PAGINA PRINCIPAL DE DESTINOS
+    return redirect('/adminDestinos')->with(
+        'mensaje',
+        'Destino: ' . $destNombre . ' eliminado correctamente'
+    );
 });

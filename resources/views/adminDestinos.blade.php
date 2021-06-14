@@ -5,10 +5,9 @@
         <h1>Panel de administración de destinos</h1>
         <!--PARA MOSTRAR UN ALERTA CUANDO DAMOS DE ALTA UNA REGION-->
         @if(session('mensaje'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>{{session('mensaje')}}</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
+            <div class="alert alert-success">
+                {{session('mensaje')}}
+            </div>
         @endif
 
         <table class="table table-borderless table-striped table-hover">
